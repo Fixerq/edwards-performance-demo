@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       try {
         const anthropicStream = await client.messages.stream({
           model: 'claude-sonnet-4-20250514',
-          max_tokens: 300,
+          max_tokens: 150,
           system: systemPrompt,
           messages: messages,
         })

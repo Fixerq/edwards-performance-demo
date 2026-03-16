@@ -17,11 +17,13 @@ export default function ChatDemo() {
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+    }
   }, [messages])
 
   const sendMessage = async (content: string) => {
@@ -126,7 +128,7 @@ export default function ChatDemo() {
         </div>
 
         {/* Messages area */}
-        <div className="h-[400px] overflow-y-auto p-5 space-y-4 chat-scroll">
+        <div ref={chatContainerRef} className="h-80 overflow-y-auto p-5 space-y-4 chat-scroll">
           {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mb-4">
@@ -194,7 +196,7 @@ export default function ChatDemo() {
             </div>
           )}
 
-          <div ref={messagesEndRef} />
+          <div />
         </div>
 
         {/* Input area */}
